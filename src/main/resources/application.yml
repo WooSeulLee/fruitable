@@ -10,7 +10,7 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/fruitable
+    url: jdbc:mariadb://localhost:3306/fruitable
     username: root
     password: r1r2r3
     hikari:

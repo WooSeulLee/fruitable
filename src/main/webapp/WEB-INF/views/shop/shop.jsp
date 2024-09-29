@@ -469,7 +469,7 @@
 <!-- Fruits Shop End-->
 
 <script>
-	function getCategories() {
+function getCategories() {
 		//debugger;
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', '/categories')
@@ -493,8 +493,46 @@
 		}
 		xhr.send();
 	}
-	window.onload = getCategories;
-	//window.addEventListener('load',getCategories);
+
+									
+function getItems() {
+	//debugger;
+	const xhr = new XMLHttpRequest();
+	xhr.open('GET', '/foods')
+	xhr.onreadystatechange = function() {
+	if (xhr.readyState === 4) {
+		if (xhr.status === 200) {
+			const foods = JSON.parse(xhr.responseText);
+			console.log(xhr.responseText);
+			var html = '';
+			for(const food of foods){
+				html += '<div class="col-md-6 col-lg-6 col-xl-4">';
+				html += '<div class="rounded position-relative fruite-item">';
+				html += '<div class="fruite-img">';
+				html += '<img src="/res/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">';
+				html += '</div>';
+				html+= '<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">'+ food.caiName +'</div>';
+				html+= '<div class="p-4 border border-secondary border-top-0 rounded-bottom">';
+				html+= '<h4>' + food.foiName + '</h4>';
+				html+= '<p>' + food.foiSummary + '</p>';
+				html+= '<div class="d-flex justify-content-between flex-lg-wrap">';
+				html+= '<p class="text-dark fs-5 fw-bold mb-0">'+food.foiPrice+' / kg</p>';
+				html+= '<a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add tocart</a>';
+				html+= '</div></div></div></div>';
+			}
+			document.querySelector('.row.g-4.justify-content-center').innerHTML = html;
+			}
+		}
+	}
+	xhr.send();
+}
+
+window.onload = function() {
+    getItems();
+    getCategories();
+};
+	
+	
 </script>
 
 

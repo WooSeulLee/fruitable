@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.fruitable.mapper.FoodInfoMapper">
+
+<select id="selectFoods" resultType="com.shop.fruitable.vo.FoodInfoVO">
+	SELECT FOI.FOI_NUM, FOI_NAME, FOI_PRICE, FOI_IMG_PATH,
+   	FOI_SUMMARY, FOI_DESC, FOI.CREDAT, FOI.CRETIM,
+   	FOI.CAI_NUM, CAI.CAI_NAME
+	FROM food_info FOI
+	INNER JOIN category_info CAI
+	ON FOI.CAI_NUM = CAI.CAI_NUM
+	GROUP BY FOI.FOI_NUM, FOI.FOI_NAME, FOI.FOI_PRICE, FOI.FOI_IMG_PATH,
+  	FOI.FOI_SUMMARY, FOI.FOI_DESC, FOI.CREDAT, FOI.CRETIM,
+   	FOI.CAI_NUM, CAI.CAI_NAME;
+</select>
+
+<select id="selectFood" resultType="com.shop.fruitable.vo.FoodInfoVO">
+	SELECT FOI_NUM, FOI_NAME, FOI_PRICE, FOI_IMG_PATH, FOI_SUMMARY, FOI_DESC, CREDAT, CRETIM
+	FROM food_info;
+	WHERE FOI_NUM = #{foiNum}
+</select>
+
+<insert id="insertFood">
+	INSERT INTO food_info (FOI_NAME, FOI_PRICE, FOI_IMG_PATH, FOI_SUMMARY, FOI_DESC, CAI_NUM)
+	VALUES (#{foiName}, #{foiPrice}, #{foiImgPath}, #{foiSummary}, #{foiDesc}, #{caiNum});
+</insert>
+
+<update id="updateFood">
+	UPDATE food_info
+	SET FOI_NAME = #{foiName},
+	FOI_PRICE = #{foiPrice},
+	FOI_IMG_PATH = #{foiImgPath},
+	FOI_SUMMARY = #{foiSummary},
+	FOI_DESC = #{foiDesc}
+	WHERE FOI_NUM = #{foiNum}
+</update>
+
+<delete id="deleteFood">
+	DELETE FROM food_info WHERE FOI_NUM = #{foiNum}
+</delete>
+
+</mapper>
